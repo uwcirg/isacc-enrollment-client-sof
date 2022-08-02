@@ -200,14 +200,25 @@ class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponen
         //     this.showSnackbar("error", "Schedule could not be created");
         // }
         // save all the communication requests first so we can get references to them
-        Promise.all(promises).then((values) => {
-            values.forEach((v) => {
+        Promise.all(promises).then((communicationRequests) => {
+            communicationRequests.forEach((v) => {
                 console.log("resource saved:", v);
             });
             // create CarePlan with the newly created CommunicationRequests
             let carePlan = makeCarePlan(this.props.planDefinition, patient,
-                values.map((c: any) => CommunicationRequest.from(c)), this.state.patientNote);
-            client.create(carePlan).then((v: IResource) => this.onSaved(v), (reason: any) => this.onRejected(reason));
+                communicationRequests.map((c: any) => CommunicationRequest.from(c)), this.state.patientNote);
+            client.create(carePlan).then((savedCarePlan: IResource) => {
+                this.onSaved(savedCarePlan);
+                let updatePromises = communicationRequests.map((c:CommunicationRequest) => {
+                    c.basedOn = [{reference: `CarePlan/${savedCarePlan.id}`}];
+                    return client.update(c);
+                });
+                Promise.all(updatePromises).then((updatedCommunicationRequests) => {
+                    updatedCommunicationRequests.forEach((v) => {
+                        console.log("CommunicationRequest updated:", v);
+                    });
+                })
+            }, (reason: any) => this.onRejected(reason));
         }, this.onRejected);
     }
 
