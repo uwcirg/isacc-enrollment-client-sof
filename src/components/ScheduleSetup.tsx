@@ -1,5 +1,5 @@
 import * as React from "react";
-import PlanDefinition, {ActivityDefinition} from "../model/PlanDefinition";
+import PlanDefinition from "../model/PlanDefinition";
 import {
     Button,
     CircularProgress,
@@ -20,6 +20,8 @@ import {CommunicationRequest} from "../model/CommunicationRequest";
 import {injectIntl, WrappedComponentProps} from "react-intl";
 import {createStyles, StyledComponentProps, withStyles} from "@mui/styles";
 import Alert from "@mui/material/Alert";
+import Patient from "../model/Patient";
+import Error from "./Error";
 
 
 interface ScheduleSetupProps {
@@ -78,9 +80,9 @@ const styles = createStyles((theme: Theme) => {
     }
 });
 
+
 class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponentProps & StyledComponentProps, ScheduleSetupState> {
     static contextType = FhirClientContext
-
 
     constructor(props: Readonly<ScheduleSetupProps & WrappedComponentProps & StyledComponentProps> | (ScheduleSetupProps & WrappedComponentProps & StyledComponentProps)) {
         super(props);
@@ -91,27 +93,20 @@ class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponen
             alertText: null,
             alertSeverity: null
         };
-
     }
-
-    componentDidMount(): void {
-        const messages: MessageDraft[] = this.props.planDefinition.activityDefinitions.map(function (message: ActivityDefinition) {
-            let contentString = message.dynamicValue.find((dynVal) => dynVal.path === "payload.contentString").expression.expression;
-            let date = message.occurrenceTimeFromNow();
-
-            return {
-                text: contentString,
-                scheduledDateTime: date
-                // scheduledDate: date.toISOString().substr(0, 10),
-                // scheduledTime: date.toISOString().substr(11, 5),
-            } as MessageDraft;
-        });
-
-        this.setState({messages: messages});
-    }
-
     render(): React.ReactNode {
-        if (!this.state || !this.state.messages) return <CircularProgress/>;
+        if (!this.state) return <CircularProgress/>;
+
+        // @ts-ignore
+        let patient: Patient = this.context.patient;
+
+        if (!patient) return <Error message={"No patient"}/>;
+
+        if (!this.state.messages) {
+            const messages: MessageDraft[] = this.props.planDefinition.createMessageList(patient);
+            this.setState({messages: messages});
+            return <CircularProgress/>; // render will get re-triggered because messages were just set on state.
+        }
 
         const {classes} = this.props;
         const {intl} = this.props;
@@ -142,8 +137,12 @@ class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponen
             }</List>
 
             <Stack direction={'row'} justifyContent={"space-between"}>
-                <Button variant="outlined" onClick={() => this.showSnackbar("info", "Not implemented")}>Add
-                    message</Button>
+                <Button variant="outlined" onClick={() => {
+                    this.state.messages.push({text: "", scheduledDateTime: new Date()});
+                    this.setState({messages: this.state.messages});
+                }}>
+                    Add message
+                </Button>
                 <Button variant="contained" onClick={() => this.saveSchedule()}>
                     Done
                 </Button>
@@ -188,6 +187,11 @@ class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponen
             return;
         }
 
+        if (this.state.messages.find((m: MessageDraft) => m.text.length === 0)) {
+            this.showSnackbar("error", "Messages cannot be empty");
+            return;
+        }
+
         let communicationRequests = makeCommunicationRequests(patient, this.props.planDefinition, this.state.messages);
         let promises = communicationRequests.map((c: CommunicationRequest) => client.create(c));
 
@@ -209,7 +213,7 @@ class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponen
                 communicationRequests.map((c: any) => CommunicationRequest.from(c)), this.state.patientNote);
             client.create(carePlan).then((savedCarePlan: IResource) => {
                 this.onSaved(savedCarePlan);
-                let updatePromises = communicationRequests.map((c:CommunicationRequest) => {
+                let updatePromises = communicationRequests.map((c: CommunicationRequest) => {
                     c.basedOn = [{reference: `CarePlan/${savedCarePlan.id}`}];
                     return client.update(c);
                 });
@@ -266,6 +270,8 @@ class ScheduleSetup extends React.Component<ScheduleSetupProps & WrappedComponen
                 </Grid>
                 <Grid item xs={8}>
                     <TextField
+                        error={message.text.length === 0}
+                        helperText={message.text.length === 0 ? "Enter a message" : ""}
                         label={"Message"}
                         fullWidth
                         multiline

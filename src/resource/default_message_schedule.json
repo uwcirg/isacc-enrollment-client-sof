@@ -5,13 +5,34 @@
   "status": "active",
   "action": [
     {
-      "definitionCanonical": "#Wk1Msg"
+      "definitionCanonical": "#Day1Msg"
     },
     {
-      "definitionCanonical": "#Wk3Msg"
+      "definitionCanonical": "#Week1Msg"
     },
     {
-      "definitionCanonical": "#Wk6Msg"
+      "definitionCanonical": "#Month1Msg"
+    },
+    {
+      "definitionCanonical": "#Month2Msg"
+    },
+    {
+      "definitionCanonical": "#Month3Msg"
+    },
+    {
+      "definitionCanonical": "#Month4Msg"
+    },
+    {
+      "definitionCanonical": "#Month6Msg"
+    },
+    {
+      "definitionCanonical": "#Month8Msg"
+    },
+    {
+      "definitionCanonical": "#Month10Msg"
+    },
+    {
+      "definitionCanonical": "#Month12Msg"
     },
     {
       "definitionCanonical": "#BirthdayMsg",
@@ -33,7 +54,33 @@
   "contained": [
     {
       "resourceType": "ActivityDefinition",
-      "id": "Wk1Msg",
+      "id": "Day1Msg",
+      "name": "Day 1 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 0,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "09:34:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "{name} - Good to meet you last Thursday. Check out our website: www.MCproj.org. Hope the resources are helpful."
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Week1Msg",
       "name": "Week 1 Message",
       "status": "active",
       "kind": "CommunicationRequest",
@@ -43,7 +90,7 @@
           "period": 1,
           "periodUnit": "wk",
           "timeOfDay": [
-            "08:06:00"
+            "10:39:00"
           ]
         }
       },
@@ -52,24 +99,24 @@
           "path": "payload.contentString",
           "expression": {
             "language": "text/cql",
-            "expression": "Hey {name}, it’s a good week to have a good week! Sending good thoughts and positive energy your way."
+            "expression": "Hi {name} - Hope things go well for you this week. Megan from the MCProject."
           }
         }
       ]
     },
     {
       "resourceType": "ActivityDefinition",
-      "id": "Wk3Msg",
-      "name": "Week 3 Message",
+      "id": "Month1Msg",
+      "name": "Month 1 Message",
       "status": "active",
       "kind": "CommunicationRequest",
       "timingTiming": {
         "repeat": {
           "frequency": 1,
-          "period": 3,
+          "period": 4,
           "periodUnit": "wk",
           "timeOfDay": [
-            "09:12:00"
+            "08:59:00"
           ]
         }
       },
@@ -78,24 +125,24 @@
           "path": "payload.contentString",
           "expression": {
             "language": "text/cql",
-            "expression": "Hey {name}, hope your day is going well. You are not alone. If you need immediate help, don't forget about the 24/7 National Hotline 1-800-273-8355 and resources on our website: www.stayincontact.org"
+            "expression": "Hi there {name}, hope you?re having a good day today."
           }
         }
       ]
     },
     {
       "resourceType": "ActivityDefinition",
-      "id": "Wk6Msg",
-      "name": "Week 6 Message",
+      "id": "Month2Msg",
+      "name": "Month 2 Message",
       "status": "active",
       "kind": "CommunicationRequest",
       "timingTiming": {
         "repeat": {
           "frequency": 1,
-          "period": 6,
+          "period": 8,
           "periodUnit": "wk",
           "timeOfDay": [
-            "09:02:00"
+            "10:51:00"
           ]
         }
       },
@@ -104,7 +151,163 @@
           "path": "payload.contentString",
           "expression": {
             "language": "text/cql",
-            "expression": "You are unique and you are special. There is no one else on earth like you! Best wishes on the rest of your week."
+            "expression": "Hey {name}, hope things are going well and you\u2019re having a good week. -Alvin, MCProj.org"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Month3Msg",
+      "name": "Month 3 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 12,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "10:19:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "Hey {name}, Hope things are good and you have had a good week. - Jessica, MCproj.org"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Month4Msg",
+      "name": "Month 4 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 16,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "10:12:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "Hi {name}, hope life is treating you well. -Megan, MCProj.org"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Month6Msg",
+      "name": "Month 6 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 24,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "09:30:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "Hello again, {name}! Hope things are good -Alvin, MCProj.org"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Month8Msg",
+      "name": "Month 8 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 32,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "08:17:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "{name}, Hope everything's going well. Megan, MCProj.org"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Month10Msg",
+      "name": "Month 10 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 40,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "08:07:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "{name}- Hope everything's going well. -Amanda & the MCProj.org team"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "Month12Msg",
+      "name": "Month 12 Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "timingTiming": {
+        "repeat": {
+          "frequency": 1,
+          "period": 48,
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "08:41:00"
+          ]
+        }
+      },
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "Hey {name} - Just wanted to say hello. Hope things are going OK. - Jessica, MCProj.org"
           }
         }
       ]
