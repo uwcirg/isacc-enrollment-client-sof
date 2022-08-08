@@ -69,10 +69,9 @@ export class ActivityDefinition implements IActivityDefinition {
         }
 
         const components: Array<string> = this.timingTiming.repeat.timeOfDay[0].split(":");
-        const hours = parseFloat(components[0]) * 60 * 60 * 1000;
-        const minutes = parseFloat(components[1]) * 60 * 1000;
-        const seconds = parseFloat(components[1]) * 1000;
-        date.setTime(hours + minutes + seconds);
+        date.setHours(parseFloat(components[0]));
+        date.setMinutes(parseFloat(components[1]));
+        date.setSeconds(parseFloat(components[2]));
 
         return date;
     }
