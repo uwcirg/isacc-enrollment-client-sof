@@ -12,6 +12,22 @@
     },
     {
       "definitionCanonical": "#Wk6Msg"
+    },
+    {
+      "definitionCanonical": "#BirthdayMsg",
+      "trigger": [
+        {
+          "type": "named-event",
+          "name": "birthday",
+          "timingTiming": {
+            "repeat": {
+              "timeOfDay": [
+                "10:08:00"
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "contained": [
@@ -25,7 +41,10 @@
         "repeat": {
           "frequency": 1,
           "period": 1,
-          "periodUnit": "wk"
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "08:06:00"
+          ]
         }
       },
       "dynamicValue": [
@@ -48,7 +67,10 @@
         "repeat": {
           "frequency": 1,
           "period": 3,
-          "periodUnit": "wk"
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "09:12:00"
+          ]
         }
       },
       "dynamicValue": [
@@ -71,7 +93,10 @@
         "repeat": {
           "frequency": 1,
           "period": 6,
-          "periodUnit": "wk"
+          "periodUnit": "wk",
+          "timeOfDay": [
+            "09:02:00"
+          ]
         }
       },
       "dynamicValue": [
@@ -80,6 +105,22 @@
           "expression": {
             "language": "text/cql",
             "expression": "You are unique and you are special. There is no one else on earth like you! Best wishes on the rest of your week."
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "ActivityDefinition",
+      "id": "BirthdayMsg",
+      "name": "Birthday Message",
+      "status": "active",
+      "kind": "CommunicationRequest",
+      "dynamicValue": [
+        {
+          "path": "payload.contentString",
+          "expression": {
+            "language": "text/cql",
+            "expression": "Happy Birthday, {name}! Hope the day brings you happiness and next year holds good things for you."
           }
         }
       ]
