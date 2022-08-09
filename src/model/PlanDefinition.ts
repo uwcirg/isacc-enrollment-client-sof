@@ -60,7 +60,7 @@ export default class PlanDefinition implements IPlanDefinition {
             }).filter(m => m != null);
 
         // add birthday messages
-        let messageDates = messages.map((m: MessageDraft) => m.scheduledDateTime).sort();
+        let messageDates = messages.map((m: MessageDraft) => m.scheduledDateTime).sort(((a, b) => a < b ? -1 : 1));
         if (messageDates.length > 0) {
             let programStart = messageDates[0];
             let programEnd = messageDates[messageDates.length - 1];

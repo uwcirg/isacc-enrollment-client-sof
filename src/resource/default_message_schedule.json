@@ -125,7 +125,7 @@
           "path": "payload.contentString",
           "expression": {
             "language": "text/cql",
-            "expression": "Hi there {name}, hope you?re having a good day today."
+            "expression": "Hi there {name}, hope you're having a good day today."
           }
         }
       ]

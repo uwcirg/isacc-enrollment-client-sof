@@ -12,7 +12,7 @@ import {IntlProvider} from "react-intl";
 import messages_de from './l10n/intl_de_DE.json';
 import messages_mn from './l10n/intl_mn.json';
 import messages_en from './l10n/intl_en.json';
-import {Typography} from "@mui/material";
+import {Typography, Stack} from "@mui/material";
 import theme from "./theme";
 import {ThemeProvider} from "@mui/styles";
 
@@ -29,14 +29,17 @@ export default class App extends React.Component<any, any> {
         return (
             <IntlProvider key={locale} locale={locale} messages={intlMessages[locale]}>
                 <ThemeProvider theme={theme}>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <FhirClientProvider>
-                        <DemoVersionBanner/>
-                        <Typography variant={"h5"}>Patient enrollment</Typography>
-                        <Summary/>
-                        <ScheduleSetup planDefinition={getDefaultMessageSchedule()}/>
-                    </FhirClientProvider>
-                </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <FhirClientProvider>
+
+                            <DemoVersionBanner/>
+                            <Stack direction={"column"} sx={{padding: 1}}>
+                                <Typography variant={"h5"}>Patient enrollment</Typography>
+                                <Summary/>
+                                <ScheduleSetup planDefinition={getDefaultMessageSchedule()}/>
+                            </Stack>
+                        </FhirClientProvider>
+                    </LocalizationProvider>
                 </ThemeProvider>
             </IntlProvider>
         );

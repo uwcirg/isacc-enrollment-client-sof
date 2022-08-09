@@ -12,4 +12,4 @@ const defaultValue: FhirClientContextType = {
     patient: null,
     error: ''
 }
-export const FhirClientContext = React.createContext(defaultValue);
+export const FhirClientContext = React.createContext<FhirClientContextType>(defaultValue);

@@ -23,6 +23,7 @@ export default function FhirClientProvider(props: Props): JSX.Element {
             (client: Client) => {
                 setClient(client);
                 getPatient(client).then(result => {
+                    console.log("Loaded patient: ", (result as Patient).reference)
                     setPatient(result);
                 }).catch(e => {
                     console.log("Error ", e)
@@ -57,7 +58,7 @@ export default function FhirClientProvider(props: Props): JSX.Element {
                     }
 
                     // if client is already available render the subtree
-                    if (client) {
+                    if (client && patient) {
                         return props.children;
                     }
 

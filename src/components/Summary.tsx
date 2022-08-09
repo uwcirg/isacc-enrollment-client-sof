@@ -16,7 +16,7 @@ type SummaryState = {
 
 export default class Summary extends React.Component<SummaryProps, SummaryState> {
     static contextType = FhirClientContext
-
+    // declare context: React.ContextType<typeof FhirClientContext>
 
     constructor(props: Readonly<SummaryProps> | SummaryProps) {
         super(props);
@@ -24,30 +24,6 @@ export default class Summary extends React.Component<SummaryProps, SummaryState>
             error: ''
         }
     }
-
-// private async getFhirResources(client, id) {
-    //     const resources = getFHIRResourcePaths(id);
-    //     const requests = resources.map(resource => contextContent.client.request(resource));
-    //     return Promise.all(requests).then(results => {
-    //         results.forEach(result => {
-    //             if (!result) return true;
-    //             if (result.resourceType === 'Bundle' && result.entry) {
-    //                 result.entry.forEach(o => {
-    //                     if (o && o.resource) patientBundle.entry.push({resource: o.resource});
-    //                 });
-    //             } else if (Array.isArray(result)) {
-    //                 result.forEach(o => {
-    //                     if (o.resourceType) patientBundle.entry.push({resource: o});
-    //                 });
-    //             } else {
-    //                 patientBundle.entry.push({resource: result});
-    //             }
-    //         });
-    //         //FHIR resources should be available now via patientBundle.entry
-    //         console.log('FHIR resource bundle entries ', patientBundle.entry);
-    //     });
-    // }
-
 
     render(): React.ReactNode {
         if (!this.state) return <CircularProgress/>;
